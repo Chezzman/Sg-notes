@@ -1,5 +1,53 @@
 console.log('In Main.js');
-document.addEventListener('DOMContentLoaded' , function () { 
+
+$(function (){
+  console.log('DOM Loaded (jQuery)');
+  console.log('---USing Jquery');
+
+//  var listcontainer = document.getElementById('item-list');
+//  var listContainer2 = $('#item-list');
+
+  var $listContainer2 = $('#item-list');
+  var listContainer1 = document.getElementById('item-list');
+  var $listItems = $('#item-list li');
+
+  console.log('ListItems (JQuery): ', $listItems);
+  console.log('JQ getting ID of ul' , listContainer1);
+  console.log('JS Getting ID of ul' , $listContainer2);
+
+  var $newListItem1 = $('<li>new item prepened by jquery</li>').addClass('dull');
+  var $newListItem2 = $('<li></li>').addClass('garish').html('New item Prepended by jQuery');
+  console.log('newListItem2.html(): ' , $newListItem2.html());
+  listContainer1.prepend($newListItem1);
+  $listContainer2.append($newListItem2);
+
+  //JS... With out JQ
+  // var listItems2 = document.getElementsByIdTagName('li');
+  // for (var i = 0 ; i < listItems2.length ; i++){
+  //   listItems2[i].classList.add('emphasised');
+  // }
+
+//with JQuery you spend 1/3 of the time crying at how much faster it is..........
+  $listContainer2.children().addClass('emphasised');
+  //
+  // $('#touch').click(function (){
+  //   alert('Are you kidding me!!!!')
+  // });
+
+  $('#touch').on('click', function(){
+    alert('Eat my shorts');
+  });
+});
+
+
+
+$(document).ready(function(){
+  console.log('DOM LOADED.READY');
+});
+
+document.addEventListener('DOMContentLoaded' , function () {
+  console.log('DOM Loaded (what DOMContentLoaded)');
+
   console.log(document); //to get the HTML with in console, layout like the element tab
 
 //document.body
@@ -82,3 +130,6 @@ document.addEventListener('DOMContentLoaded' , function () {
 // document.getElementById('touch').innerHTML = 'Something PG';
 //}
 //touchme.addEventListener('click', handleButtonClick)
+
+
+console.log('_____JQuery');
