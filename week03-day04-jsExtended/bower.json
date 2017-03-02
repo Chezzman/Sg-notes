@@ -1,0 +1,14 @@
+{
+  "name": "bower testing",
+  "homepage": "https://github.com/Chezzman/Sg-notes",
+  "authors": [
+    "Charles George van Oeffelen <charlevo@spartaglobal.co>"
+  ],
+  "description": "seeing how bower works",
+  "main": "",
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "^3.1.1",
+    "bootstrap": "^3.3.7"
+  }
+}
