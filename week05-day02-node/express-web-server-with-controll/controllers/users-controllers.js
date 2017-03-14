@@ -29,17 +29,7 @@ function getNextUserId(){
 // Action: index
 function indexUsers(req, res) {
   //res.render will search for views folder, so specifie the ejs file
-  res.render('users/index', {title : 'Users list', users: users});
-
-  //this is now being implemented into the ejs file.
-  // var html = '<h1>List of users</h1>';
-  //
-  // html += '<ul>';
-  // for (var i = 0; i < users.length; i++) {
-  //   html += '<li><a href="/users/' + users[i].id + '">' + users[i].firstName + ' ' + users[i].lastName + ' (' + users[i].email + ')' + '</a></li>';
-  // }
-  // html += '</ul>';
-  res.status(200).send(html);
+  res.render('users/index', { title: 'Users list', users: users});
 }
 // Action: new
 function newUser(req, res) {
@@ -93,20 +83,20 @@ function showUser(req, res) {
   var status;
   var html = '<h1>Show user ' + userId + '</h1>';
 
+
   userIndex = findUserIndexById(userId);
 
   if (userIndex !== -1) {
     user = users[userIndex];
     status = 200;
-    html += '<p>First name: ' + user.firstName + '</p>';
-    html += '<p>Last name: ' + user.lastName + '</p>';
-    html += '<p>Email: ' + user.email + '</p>';
   } else {
     status = 404;
-    html += '<em>User not found with id ' + userId + '</em>';
   }
 
-  res.status(status).send(html);
+  res.status(status).render('users/show',{
+    title: 'Show user' + userId,
+    user: user
+  });
 }
 // Action: destroy
 function deleteUser(req, res) {
