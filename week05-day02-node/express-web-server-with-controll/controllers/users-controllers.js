@@ -12,20 +12,33 @@ var users = [
     email: 'bob@example.com'
   }
 ];
+var currentUserId = 100;
+
 function findUserIndexById(userId) {
   return users.findIndex(function (user) {
     return user.id === userId;
   });
 }
+
+function getNextUserId(){
+  currentUserId++;
+
+  return currentUserId.toString();
+}
+
 // Action: index
 function indexUsers(req, res) {
-  var html = '<h1>List of users</h1>';
+  //res.render will search for views folder, so specifie the ejs file
+  res.render('users/index', {title : 'Users list', users: users});
 
-  html += '<ul>';
-  for (var i = 0; i < users.length; i++) {
-    html += '<li><a href="/users/' + users[i].id + '">' + users[i].firstName + ' ' + users[i].lastName + ' (' + users[i].email + ')' + '</a></li>';
-  }
-  html += '</ul>';
+  //this is now being implemented into the ejs file.
+  // var html = '<h1>List of users</h1>';
+  //
+  // html += '<ul>';
+  // for (var i = 0; i < users.length; i++) {
+  //   html += '<li><a href="/users/' + users[i].id + '">' + users[i].firstName + ' ' + users[i].lastName + ' (' + users[i].email + ')' + '</a></li>';
+  // }
+  // html += '</ul>';
   res.status(200).send(html);
 }
 // Action: new
@@ -34,7 +47,16 @@ function newUser(req, res) {
 }
 // Action: create
 function createUser(req, res) {
-  res.status(200).send('<h1>Action: create</h1>');
+  var userId = getNextUserId();
+  var newUser = {
+    id: userId,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email
+  };
+  users.push(newUser);
+  console.log('req.body: ', req.body);
+  res.status(200).send('<h1>Action: create new user ' + userId + '</h1>');
 }
 // Action: edit
 function editUser(req, res) {
@@ -42,7 +64,26 @@ function editUser(req, res) {
 }
 // Action: update
 function updateUser(req, res) {
- res.status(200).send('<h1>Action: update</h1>');
+  var userId = req.params.id;
+  var userIndex;
+  var user;
+  var status;
+  var html = '<h1>Updating user with id ' + userId + '</h1>';
+  userIndex = findUserIndexById(userId);
+  if(userIndex > -1){
+    user = users[userIndex];
+    user.firstName = req.body.firstName;
+    user.lastName = req.body.lastName;
+    user.email = req.body.email;
+    status = 200;
+    html += '<p>User update</p>';
+  }else{
+    html += '<em>Could not find user with id ' + userId + '</em>';
+    status = 404;
+  }
+
+  res.status(status).send(html);
+
 }
 // Action: show
 function showUser(req, res) {
