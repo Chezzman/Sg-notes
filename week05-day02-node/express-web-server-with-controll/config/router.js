@@ -3,7 +3,7 @@ var router = express.Router();
 var usersController = require('../controllers/users-controllers');
 
 router.get('/', function (req, res) {
-  res.render('index');
+  res.render('index', {title: 'Home'});
 });
 router.route('/users')
  .get(usersController.index)
