@@ -1,0 +1,13 @@
+<h2>Edit your self</h2>
+
+
+<% if (users) { %>
+  <form action="/users/<% userId %>">
+    <input type="text" id="firstName" name="firstName" value="<% user.firstName %>" placeholder="First name here">
+    <input type="text" id="lastName" name="lastName" value="<% user.firstName %>" placeholder="Last name here">
+    <input type="text" id="email" name="email" value="<% user.firstName %>" placeholder="Email">
+    <input type="submit" value="submit">
+  </form>
+<% } else { %>
+  <em>There was a complication </em>
+<% } %>

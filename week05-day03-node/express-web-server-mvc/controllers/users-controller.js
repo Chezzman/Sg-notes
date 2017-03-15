@@ -23,13 +23,14 @@ function findUserIndexById(userId) {
 
 function getNextUserId() {
   currentUserId++;
+
   return currentUserId.toString();
 }
 
 // Action: index
 function indexUsers(req, res) {
   res.render('users/index', {
-    title: 'User list: ',
+    title: 'User list',
     users: users
   });
 }
@@ -37,57 +38,61 @@ function indexUsers(req, res) {
 // Action: new
 function newUser(req, res) {
   res.render('users/new', {
-    users: users,
     title: 'New user'
   });
-
 }
 
 // Action: create
 function createUser(req, res) {
-  var userId = getNextUserId();
   var newUser = {
-    id: userId,
+    id: getNextUserId(),
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email
   };
+
   users.push(newUser);
   res.redirect('/users');
 }
 
 // Action: edit
 function editUser(req, res) {
-  var userId = req.body.id;
-  res.render('users/edit',{
-    title: 'Edit user' + userId ,
-    users: users
-  });
+  var userId = req.params.id;
+  var userIndex = findUserIndexById(userId);
+  var user;
+  var status;
 
+  if (userIndex !== -1) {
+    user = users[userIndex];
+    status = 200;
+  } else {
+    status = 404;
+  }
+
+  res.status(status).render('users/edit', {
+    title: 'Edit user ' + userId,
+    user: user
+  });
 }
 
 // Action: update
 function updateUser(req, res) {
-  res.render('users/update', {
-    users: users,
-    title: 'Update user'
-  });
   var userId = req.params.id;
+  var userIndex = findUserIndexById(userId);
   var user;
   var json;
-  var html = '<h1>Updating user with id: ' + userId + '</h1>';
-  var userIndex = findUserIndexById(userId);
-
 
   if (userIndex !== -1) {
+    // found the user
     user = users[userIndex];
     user.firstName = req.body.firstName;
     user.lastName = req.body.lastName;
     user.email = req.body.email;
-    html += '<p>User updated</p>';
+    // TODO: fix: this produces an error - "Cannot PUT /users"
     res.redirect('/users');
   } else {
-    json = { error: 'Could not find user with id ' + userId};
+    // user with :id does not exist
+    json = { error: 'Could not find user with id ' + userId };
     res.status(404).json(json);
   }
 }
@@ -103,6 +108,7 @@ function showUser(req, res) {
 
   if (userIndex !== -1) {
     user = users[userIndex];
+    status = 200;
   } else {
     status = 404;
   }
@@ -115,25 +121,20 @@ function showUser(req, res) {
 
 // Action: destroy
 function destroyUser(req, res) {
-  res.render('users/delete', {
-    users: users,
-    title: 'Delete user'
-  });
   var userId = req.params.id;
   var userIndex;
   var json;
-  var html = '<h1>Delete user ' + userId + '</h1>';
 
   userIndex = findUserIndexById(userId);
 
   if (userIndex !== -1) {
     // user exists
     users.splice(userIndex, 1);
+    // TODO: fix: this produces an error - "Cannot DELETE /users"
     res.redirect('/users');
-    html += 'User with id ' + userId + ' deleted';
   } else {
     // trying to delete non-existent user
-    json = { error: 'Could not find user with id ' + userId}
+    json = { error: 'Could not find user with id ' + userId };
     res.status(404).json(json);
   }
 }

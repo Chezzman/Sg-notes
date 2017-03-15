@@ -3,7 +3,8 @@
   <p>First name: <%= user.firstName %></p>
   <p>Last name: <%= user.lastName %></p>
   <p>Email: <%= user.email %></p>
+
+  <a href="/users/<%= users.id %>/edit">Edit user</a>
 <% } else { %>
   <em>user not found, pls. </em>
 <% } %>
-<p>SOME DIRTY STUFF.... place here</p>

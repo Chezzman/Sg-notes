@@ -18,3 +18,17 @@
 
       </body>
     </html>
+
+
+
+commented out crap
+
+
+//this is now being implemented into the ejs file.
+// var html = '<h1>List of users</h1>';
+//
+// html += '<ul>';
+// for (var i = 0; i < users.length; i++) {
+//   html += '<li><a href="/users/' + users[i].id + '">' + users[i].firstName + ' ' + users[i].lastName + ' (' + users[i].email + ')' + '</a></li>';
+// }
+// html += '</ul>';
