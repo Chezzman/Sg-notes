@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var usersController = require('../controllers/users-controller');
+var bookController = require('../controllers/book-controller');
 
 router.get('/', function (req, res) {
   res.render('index', {
@@ -19,4 +20,9 @@ router.route('/users/:id')
   .get(usersController.show)
   .delete(usersController.destroy);
 
+router.route('/book')
+  .post(bookController.new)
+  .get(bookController.create);
+
+  
 module.exports = router;
