@@ -76,7 +76,6 @@ function updateUser(req, res) {
     lastName: req.body.lastName,
     email: req.body.email
   };
-
   User.findOneAndUpdate({ _id: userId }, updatedUser, function (err) {
     if (err) {
       console.log('Could not get existing user to update:', err.message);
