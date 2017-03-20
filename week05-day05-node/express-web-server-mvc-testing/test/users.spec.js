@@ -9,27 +9,124 @@ var request;
 chai.should();
 chai.use(chaiHttp);
 
-describe('Users', function() {
+// We are looking for HTML that looks like this:
+// <a href="/users/58cbb8e616f8b0228f71b315">
+// We can the extract the user ID from the `href` attribute using a regex.
+function getFirstUserIdFromUserListHTML(html) {
+  var regEx = /\/users\/[0-9a-f]+/;
+  var result = regEx.exec(html)[0];
+  var pathElements = result.split('/');
+
+  return pathElements[2];
+}
+
+describe('Users', function () {
   beforeEach(function () {
     request = chai.request(app);
   });
-  it('Should return error for invalid url GET', function (done){
-    request
-      .get('/invalid_url')
-      .end(function(err){
-        expect(err).not.to.be.null;
-        done();
-      });
+
+  describe('GET', function () {
+    it('should return error for invalid URL GET', function (done) {
+      request
+        .get('/invalid_url')
+        .end(function (err) {
+          expect(err).not.to.be.null;
+          done();
+        });
+    });
+    it('should list all users for GET /users', function (done) {
+      request
+        .get('/users')
+        .end(function (err, res) {
+          expect(err).to.be.null;
+          res.should.have.status(200);
+          res.should.be.html;
+          res.text.should.match(/User list/);
+          done();
+        });
+    });
   });
-  it('should list all users on /users', function(done) {
-    request
-      .get('/users')
-      .end(function(err, res){
-        expect(err).to.be.null;
-        res.should.have.status(200);
-        res.should.be.html;
-        res.text.should.match(/User list/);
-        done();
-      });
+  describe('PUT', function () {
+    it('should return error for non-existent user id', function (done) {
+      request
+          .put('/users/non-existent-user-id')
+          .end(function (err, res) {
+            res.should.have.status(404);
+            done();
+          });
+    });
+    it('should return correct result of an update existing user', function (done) {
+      request
+          .get('/users/')
+          .end(function (err, res) {
+            var userId = getFirstUserIdFromUserListHTML(res.text);
+
+            request
+              .put('/users/' + userId)
+              .set('content-type', 'application/x-www-form-urlencoded')
+              .send({'firstName': 'Benwa', 'lastName': 'Sir' , 'email': 'bulls@tomato.com'})
+              .end(function (err, res) {
+                res.should.have.status(200);
+                res.text.should.match(/Benwa/);
+                res.text.should.match(/Sir/);
+
+                done();
+              });
+          });
+    });
+  });
+  describe('CREATE', function () {
+    it('should return error for non-existent user id', function (done) {
+      request
+          .post('/users/non-existent-user-id')
+          .end(function (err, res) {
+            res.should.have.status(404);
+            done();
+          });
+    });
+    it('should return correct result of an update existing user', function (done) {
+      request
+          .get('/users/')
+          .end(function (err, res) {
+            var userId = getFirstUserIdFromUserListHTML(res.text);
+
+            request
+              .post('/users/' + userId)
+              .set('content-type', 'application/x-www-form-urlencoded')
+              .send({'firstName': 'Benwa', 'lastName': 'Sir' , 'email': 'bulls@tomato.com'})
+              .end(function (err, res) {
+                res.should.have.status(200);
+                res.text.should.match(/Benwa/);
+                res.text.should.match(/Sir/);
+
+                done();
+              });
+          });
+    });
+  });
+
+  describe('DELETE', function () {
+    it('should return error for non-existent user id', function (done) {
+      request
+        .delete('/users/non-existent-user-id')
+        .end(function (err, res) {
+          res.should.have.status(404);
+          done();
+        });
+    });
+    it('should return correct result for existing user', function (done) {
+      request
+        .get('/users')
+        .end(function (err, res) {
+          var userId = getFirstUserIdFromUserListHTML(res.text);
+
+          request
+            .delete('/users/' + userId)
+            .end(function (err, res) {
+              res.should.have.status(200);
+              done();
+            });
+        });
+    });
   });
 });

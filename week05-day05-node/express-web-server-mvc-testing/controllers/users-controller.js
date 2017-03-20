@@ -79,7 +79,7 @@ function updateUser(req, res) {
 
   User.findOneAndUpdate({ _id: userId }, updatedUser, function (err) {
     if (err) {
-      console.log('Could not get existing user to update:', err);
+      console.log('Could not get existing user to update:', err.message);
       // ditto comment above re. keeping complexity to a minimum:
       res.status(404).send('Could not get existing user to update');
       return;
@@ -112,7 +112,7 @@ function destroyUser(req, res) {
 
   User.deleteOne({ _id: userId }, function (err) {
     if (err) {
-      console.log('Could not get user to delete:', err);
+      console.log('Could not get user to delete:', err.message);
       // ditto comment above re. keeping complexity to a minimum:
       res.status(404).send('Could not get user to delete');
       return;

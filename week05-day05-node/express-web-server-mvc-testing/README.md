@@ -23,3 +23,37 @@ test are only good as the person creating them
 making test that are fit for purpose
 
 key to know the most effective way to test the important functionality
+
+
+
+
+
+  // describe('PUT', function () {
+  //   it('should return error for non-existent user id', function (done) {
+  //     request
+  //       .put('/users/non-existent-user-id')
+  //       .end(function (err, res) {
+  //         res.should.have.status(404);
+  //         done();
+  //       });
+  //   });
+  //   it('should return correct result of an update existing user', function (done) {
+  //     request
+  //       .get('/users/')
+  //       .end(function (err, res) {
+  //         var userId = getFirstUserIdFromUserListHTML(res.text);
+  //
+  //         request
+  //           .put('/users/' + userId)
+  //           .set('content-type', 'application/x-www-form-urlencoded')
+  //           .send({'firstName': 'Benwa', 'lastName': 'Sir' , 'email': 'bulls@tomato.com'})
+  //           .end(function (err, res) {
+  //             res.should.have.status(200);
+  //             res.text.should.match(/Benwa/);
+  //             res.text.should.match(/Sir/);
+  //
+  //             done();
+  //           });
+  //       });
+  //   });
+  // });
