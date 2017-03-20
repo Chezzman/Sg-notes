@@ -36,13 +36,12 @@ function createUser(req, res) {
     var errorJson = [];
 
     if (err) {
-
       for (var path in err.errors) {
         errorJson.push({
           path: path,
           message: err.errors[path].message
         });
-        console.log('Could not create new user: errors:', err.errors[path].message);
+        console.log('Could not create new user: error:', err.errors[path].message);
       }
       res.status(400).json(errorJson);
       return;

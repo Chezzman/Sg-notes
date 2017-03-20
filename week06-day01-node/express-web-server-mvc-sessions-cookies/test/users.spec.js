@@ -19,7 +19,8 @@ function getFirstUserIdFromUserListHTML(html) {
 
   return pathElements[2];
 }
-function generateUniqueFirstName(){
+
+function generateUniqueFirstName() {
   return 'firstName' + Math.random();
 }
 
@@ -49,85 +50,83 @@ describe('Users', function () {
         });
     });
   });
+
   describe('PUT', function () {
     it('should return error for non-existent user id', function (done) {
       request
-          .put('/users/non-existent-user-id')
-          .end(function (err, res) {
-            res.should.have.status(404);
-            done();
-          });
+        .put('/users/non-existent-user-id')
+        .end(function (err, res) {
+          res.should.have.status(404);
+          done();
+        });
     });
-    it('should return correct result of an update existing user', function (done) {
+    it('should return correct result for existing user', function (done) {
       request
-          .get('/users/')
-          .end(function (err, res) {
-            var userId = getFirstUserIdFromUserListHTML(res.text);
+        .get('/users')
+        .end(function (err, res) {
+          var userId = getFirstUserIdFromUserListHTML(res.text);
 
-            request
-              .put('/users/' + userId)
-              .set('content-type', 'application/x-www-form-urlencoded')
-              .send({'firstName': 'Benwa', 'lastName': 'Sir' , 'email': 'bulls@tomato.com'})
-              .end(function (err, res) {
-                res.should.have.status(200);
-                res.text.should.match(/Benwa/);
-                res.text.should.match(/Sir/);
-
-                done();
-              });
-          });
+          request
+            .put('/users/' + userId)
+            .set('Content-Type', 'application/x-www-form-urlencoded')
+            .send({ firstName: 'testFirstName', lastName: 'testLastName', email: 'testemail@example.com' })
+            .end(function (err, res) {
+              res.should.have.status(200);
+              res.text.should.match(/testFirstName/);
+              res.text.should.match(/testLastName/);
+              done();
+            });
+        });
     });
   });
+
   describe('POST', function () {
-    it('should return error when firstName first name is blank', function (done) {
+    it('should return error when firstName is blank', function (done) {
       request
         .post('/users')
-        .set('content-type', 'application/x-www-form-urlencoded')
-        .send({ email: 'testpostfirstname@err.com' })
+        .set('Content-Type', 'application/x-www-form-urlencoded')
+        .send({ firstName: '', email: 'testpostlastname@example.com' })
         .end(function (err, res) {
           var jsonResponse = JSON.parse(res.text);
 
           res.should.have.status(400);
-          expect(jsonResponse).to.be.a('array');
+          expect(jsonResponse).to.be.an('array');
           expect(jsonResponse.length).to.equal(1);
           expect(jsonResponse[0].path).to.equal('firstName');
           done();
         });
     });
-    it('should return error when email was blank', function (done) {
+    it('should return error email is blank', function (done) {
       request
         .post('/users')
-        .set('content-type', 'application/x-www-form-urlencoded')
-        .send({ firstName: 'testName'})
+        .set('Content-Type', 'application/x-www-form-urlencoded')
+        .send({ firstName: 'testPostFirstName', email: '' })
         .end(function (err, res) {
           var jsonResponse = JSON.parse(res.text);
 
           res.should.have.status(400);
-          expect(jsonResponse).to.be.a('array');
+          expect(jsonResponse).to.be.an('array');
           expect(jsonResponse.length).to.equal(1);
           expect(jsonResponse[0].path).to.equal('email');
           done();
         });
     });
-    it.only('should create new user when input data is valid', function(done){
+    it('should create new user when input data is valid', function (done) {
       var testFirstName = generateUniqueFirstName();
+
       request
         .post('/users')
-        .set('content-type', 'application/x-www-form-urlencoded')
-        .send({ firstName: testFirstName, email: 'testpost@example.com'})
+        .set('Content-Type', 'application/x-www-form-urlencoded')
+        .send({ firstName: testFirstName, email: 'testpost@example.com' })
         .end(function (err, res) {
           var firstNameRegExp = new RegExp(testFirstName);
 
           res.should.have.status(200);
           res.text.should.match(firstNameRegExp);
-
-          request
-            .get('/users' + );
           done();
         });
     });
   });
-
 
   describe('DELETE', function () {
     it('should return error for non-existent user id', function (done) {
