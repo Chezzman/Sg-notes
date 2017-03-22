@@ -1,5 +1,5 @@
+// var User = require('../models/user-model');
 var Book = require('../models/book-model');
-require('../models/user-model');
 
 // Action: new
 function newBook(req, res) {
@@ -11,9 +11,9 @@ function newBook(req, res) {
 // Action: create
 function createBook(req, res) {
   var newBook = new Book();
-
   newBook.title = req.body.title;
   newBook.author = req.body.author;
+  console.log('newBook:', newBook);
 
   newBook.save(function (err) {
     var errorJson = [];
@@ -29,9 +29,13 @@ function createBook(req, res) {
       res.status(400).json(errorJson);
       return;
     }
+
+    // User.findOneAndUpdate();
+
     res.redirect('/users');
   });
 }
+
 
 // Action: edit
 function editBook(req, res) {
@@ -54,7 +58,6 @@ function editBook(req, res) {
 // Action: update
 function updateBook(req, res) {
   var bookId = req.params.id;
-  var userId = req.body.userId;
   var updatedBook = {
     title: req.body.title,
     author: req.body.author
@@ -67,18 +70,14 @@ function updateBook(req, res) {
       res.status(404).send('Could not get existing book to update');
       return;
     }
-    res.redirect('/users/' + userId);
+    res.redirect('/users');
   });
 }
 
 
-
 // Action: destroy
 function destroyBook(req, res) {
-  //this is req.params as its a parameter passed through the url within the router.
   var bookId = req.params.id;
-  //req.body as its within the html "body"
-  var userId = req.body.userId;
 
   Book.deleteOne({ _id: bookId }, function (err) {
     if (err) {
@@ -87,14 +86,14 @@ function destroyBook(req, res) {
       res.status(404).send('Could not get book to delete');
       return;
     }
-    res.redirect('/users/' + userId);
+    res.redirect('/users');
   });
 }
 
 module.exports = {
-  new: newBook,
-  create: createBook,
+  destroy: destroyBook,
   edit: editBook,
   update: updateBook,
-  destroy: destroyBook
+  new: newBook,
+  create: createBook
 };

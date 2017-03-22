@@ -3,14 +3,26 @@
 var chai = require('chai');
 var chaiHttp = require('chai-http');
 var app = require('../index');
-var TestUtils = require('./test-utils');
 var expect = chai.expect;
 var request;
 
 chai.should();
 chai.use(chaiHttp);
 
+// We are looking for HTML that looks like this:
+// <a href="/users/58cbb8e616f8b0228f71b315">
+// We can the extract the user ID from the `href` attribute using a regex.
+function getFirstUserIdFromUserListHTML(html) {
+  var regEx = /\/users\/[0-9a-f]+/;
+  var result = regEx.exec(html)[0];
+  var pathElements = result.split('/');
 
+  return pathElements[2];
+}
+
+function generateUniqueFirstName() {
+  return 'firstName' + Math.random();
+}
 
 describe('Users', function () {
   beforeEach(function () {
@@ -52,7 +64,7 @@ describe('Users', function () {
       request
         .get('/users')
         .end(function (err, res) {
-          var userId = TestUtils.getFirstUserIdFromUserListHTML(res.text);
+          var userId = getFirstUserIdFromUserListHTML(res.text);
 
           request
             .put('/users/' + userId)
@@ -100,7 +112,7 @@ describe('Users', function () {
         });
     });
     it('should create new user when input data is valid', function (done) {
-      var testFirstName = TestUtils.generateUniqueString('first-name');
+      var testFirstName = generateUniqueFirstName();
 
       request
         .post('/users')
@@ -129,7 +141,7 @@ describe('Users', function () {
       request
         .get('/users')
         .end(function (err, res) {
-          var userId = TestUtils.getFirstUserIdFromUserListHTML(res.text);
+          var userId = getFirstUserIdFromUserListHTML(res.text);
 
           request
             .delete('/users/' + userId)
