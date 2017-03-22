@@ -1,4 +1,5 @@
 var User = require('../models/user-model');
+require('../models/book-model');
 
 // Action: index
 function indexUsers(req, res) {
@@ -92,18 +93,20 @@ function updateUser(req, res) {
 function showUser(req, res) {
   var userId = req.params.id;
 
-  User.findOne({ _id: userId }, function (err, user) {
-    if (err) {
-      console.log('Could not get user:', err);
-      // ditto comment above re. keeping complexity to a minimum:
-      res.status(404).send('Could not get user');
-      return;
+  User.findOne({ _id: userId }).populate('books').exec(
+    function (err, user) {
+      if (err) {
+        console.log('Could not get user:', err);
+        // ditto comment above re. keeping complexity to a minimum:
+        res.status(404).send('Could not get user');
+        return;
+      }
+      res.render('users/show', {
+        title: 'Show user',
+        user: user
+      });
     }
-    res.render('users/show', {
-      title: 'Show user',
-      user: user
-    });
-  });
+  );
 }
 
 // Action: destroy
