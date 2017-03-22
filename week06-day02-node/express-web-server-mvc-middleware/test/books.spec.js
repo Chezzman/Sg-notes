@@ -35,15 +35,20 @@ describe('Books', function () {
           .get('/users/' + userId)
           .end(function (err, res) {
             var bookId = TestUtils.getFirstBookIdFromUserPageHTML(res.text);
+            var testTitle= TestUtils.generateUniqueString('title');
+            var testAuthor= TestUtils.generateUniqueString('author');
 
             request
             .put('/books/' + bookId)
             .set('Content-Type', 'application/x-www-form-urlencoded')
-            .send({ userId: userId, title: 'testTitle', author: 'testAuthor' })
+            .send({ title: testTitle, author: testAuthor, userId: userId })
             .end(function (err, res) {
+              var titleRegExp = new RegExp(testTitle);
+              var authorRegExp = new RegExp(testAuthor);
+
               res.should.have.status(200);
-              res.text.should.match(/testTitle/);
-              res.text.should.match(/testAuthor/);
+              res.text.should.match(titleRegExp);
+              res.text.should.match(authorRegExp);
               done();
             });
           });
