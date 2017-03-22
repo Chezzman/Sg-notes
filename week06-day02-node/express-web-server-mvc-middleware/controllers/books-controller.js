@@ -54,6 +54,7 @@ function editBook(req, res) {
 // Action: update
 function updateBook(req, res) {
   var bookId = req.params.id;
+  var userId = req.body.userId;
   var updatedBook = {
     title: req.body.title,
     author: req.body.author
@@ -66,7 +67,7 @@ function updateBook(req, res) {
       res.status(404).send('Could not get existing book to update');
       return;
     }
-    res.redirect('/users');
+    res.redirect('/users/' + userId);
   });
 }
 
@@ -74,7 +75,10 @@ function updateBook(req, res) {
 
 // Action: destroy
 function destroyBook(req, res) {
+  //this is req.params as its a parameter passed through the url within the router.
   var bookId = req.params.id;
+  //req.body as its within the html "body"
+  var userId = req.body.userId;
 
   Book.deleteOne({ _id: bookId }, function (err) {
     if (err) {
@@ -83,7 +87,7 @@ function destroyBook(req, res) {
       res.status(404).send('Could not get book to delete');
       return;
     }
-    res.redirect('/users');
+    res.redirect('/users/' + userId);
   });
 }
 
@@ -93,4 +97,4 @@ module.exports = {
   edit: editBook,
   update: updateBook,
   destroy: destroyBook
-}
+};

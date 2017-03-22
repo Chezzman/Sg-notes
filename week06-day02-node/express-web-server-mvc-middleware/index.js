@@ -25,18 +25,15 @@ app.use(session({
     maxAge: 24 * 60 * 60 * 1000
   }
 }));
-app.use(function (req, res, next) {
-  var pageViews = parseInt(req.session.pageViews);
 
-  if (!pageViews) {
-    req.session.pageViews = 0;
-  }
-  req.session.pageViews += 1;
-  next();
-});
 app.use(layouts);
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
+//TO get the correct method in HTML, were html can only do POST and GET,
+//this on the server side will search for _method and then can be changed to put or delete.
+//if req.body has an object(like input, so not sting or number) and has _method in req.body then use the following code
+//find more in the methodOverride documentation...
 app.use(methodOverride(function (req) {
   if (req.body && typeof req.body === 'object' && '_method' in req.body) {
     // look in urlencoded POST bodies and delete it
