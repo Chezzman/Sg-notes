@@ -4,7 +4,7 @@ var chai = require('chai');
 var chaiHttp = require('chai-http');
 var app = require('../index');
 var TestUtils = require('./test-utils');
-//var expect = chai.expect;
+var expect = chai.expect;
 var request;
 
 chai.should();
@@ -56,6 +56,55 @@ describe('Books', function () {
     });
   });
 
+  describe('POST', function () {
+    it('should return error when title is blank', function (done) {
+      request
+          .post('/books')
+          .set('Content-Type', 'application/x-www-form-urlencoded')
+          .send({ title: '', author: 'Dicky' })
+          .end(function (err, res) {
+            var jsonResponse = JSON.parse(res.text);
+
+            res.should.have.status(400);
+            expect(jsonResponse).to.be.an('array');
+            expect(jsonResponse.length).to.equal(1);
+            expect(jsonResponse[0].path).to.equal('title');
+            done();
+          });
+    });
+    it('should return error author is blank', function (done) {
+      request
+          .post('/books')
+          .set('Content-Type', 'application/x-www-form-urlencoded')
+          .send({ title: 'Great Expectations', author: '' })        .end(function (err, res) {
+            var jsonResponse = JSON.parse(res.text);
+
+            res.should.have.status(400);
+            expect(jsonResponse).to.be.an('array');
+            expect(jsonResponse.length).to.equal(1);
+            expect(jsonResponse[0].path).to.equal('author');
+            done();
+          });
+    });
+    it.only('should create new book when input data is valid', function (done) {
+      var testFirstName = TestUtils.generateUniqueString('great');
+      var userId = TestUtils.getFirstUserIdFromUserListHTML();
+      request
+        .get('/users/' + userId)
+
+      request
+          .post('/books/newBook')
+          .set('Content-Type', 'application/x-www-form-urlencoded')
+          .send({ title: testFirstName, author: 'dickens', userId: userId})
+          .end(function (err, res) {
+            var firstNameRegExp = new RegExp(testFirstName);
+
+            res.should.have.status(200);
+            res.text.should.match(firstNameRegExp);
+            done();
+          });
+    });
+  });
 
   describe('DELETE', function () {
     it('should return error for non-existent book id', function (done) {

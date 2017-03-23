@@ -18,13 +18,13 @@ function seedData() {
     book1.author = 'Chucky D';
     book1.user = userSaved._id;
     book1.save(function (err, book1Saved) {
-        var book2 = new Book();
+      var book2 = new Book();
       if (err) {
         console.log('could not create book1: err:', err);
         process.exit(1);
       }
 
-      console.log('book 1 saved: ', book1Saved)
+      console.log('book 1 saved: ', book1Saved);
       book2.title = '1984';
       book2.author = 'George Orwell';
       book2.user = userSaved._id;
@@ -33,7 +33,7 @@ function seedData() {
           console.log('could not create book2: err:', err);
           process.exit(1);
         }
-        console.log('book 1 saved: ', book2Saved)
+        console.log('book 1 saved: ', book2Saved);
 
         userSaved.books.push(book1._id);
         userSaved.books.push(book2._id);

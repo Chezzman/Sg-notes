@@ -1,21 +1,22 @@
 var Book = require('../models/book-model');
-require('../models/user-model');
-
-// Action: new
-function newBook(req, res) {
-  res.render('books/new', {
-    title: 'New book'
-  });
-}
+var User = require('../models/user-model');
+// // Action: new
+// function newBook(req, res) {
+//   res.render('books/new', {
+//     title: 'New book'
+//   });
+// }
 
 // Action: create
 function createBook(req, res) {
   var newBook = new Book();
+  var userId = req.body.userId;
 
+  newBook.user = userId;
   newBook.title = req.body.title;
   newBook.author = req.body.author;
 
-  newBook.save(function (err) {
+  newBook.save(function (err, savedBook) {
     var errorJson = [];
 
     if (err) {
@@ -29,7 +30,28 @@ function createBook(req, res) {
       res.status(400).json(errorJson);
       return;
     }
-    res.redirect('/users');
+
+    // the new book  has been created and saved to the db
+    // now we need to add the id of this new book to the 'books' array
+    //of the user whos userId we have been passed in.
+    //so the first step is to find that user:
+    User.findOne({ _id: userId }, function (err, user) {
+      if (err) {
+        console.log('Could not get user to add book to:', err);
+        res.status(404).send('Could not get user to add book to');
+        return;
+      }
+      user.books.push(savedBook._id);
+      user.save(function (err){
+        if(err){
+          console.log('Could not get user to add book to:', err);
+          res.status(404).send('Could not get user to add book to');
+          return;
+        }
+        res.redirect('/users/' + userId);
+
+      });
+    });
   });
 }
 
@@ -92,7 +114,6 @@ function destroyBook(req, res) {
 }
 
 module.exports = {
-  new: newBook,
   create: createBook,
   edit: editBook,
   update: updateBook,

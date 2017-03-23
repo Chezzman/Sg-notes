@@ -22,10 +22,8 @@ router.route('/users/:id')
   .delete(usersController.destroy);
 
 //book endpoint
-router.route('/books')
-  .post(booksController.create);
+router.post('/books', booksController.create);
 
-router.get('/books/new', booksController.new);
 router.get('/books/:id/edit', booksController.edit);
 
 router.route('/books/:id')
