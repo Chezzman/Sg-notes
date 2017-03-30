@@ -10,6 +10,18 @@
   <style>
     .isVisible {
       color: blue;
+      -webkit-animation-name: colorGonzo;
+     -webkit-animation-duration: 4s;
+     animation-name: colorGonzo;
+     animation-duration: 4s;
+    }
+    @-webkit-keyframes colorGonzo {
+      color: green;
+    }
+
+
+    @keyframes colorGonzo {
+      to { color: green;}
     }
     .isNotVisible{
       color: lightGrey;
@@ -19,29 +31,37 @@
 <body ng-controller="HomeController as home">
   <h1 ng-mouseover="home.showGonzo()">{{ home.title }}</h1>
 
-<p>Trainers: </p>
-<ul>
-  <li ng-repeat="trainer in home.trainers track by $index">{{ trainer }}</li>
-</ul>
+  <div ng-if="home.canDisplayTrainerList()">
+      <h2>Trainers: </h2>
+      <ul>
+        <li ng-repeat="trainer in home.trainers track by $index">
+          {{ trainer }}
+          <input type="text" id="{{$index}}" ng-value="trainer" ng-model="home.updateTrainersNames[$index]">
+          <button type="button" ng-click="home.newName($index)">Save New Name</button>
+          <button type="button" ng-click="home.deleteOneTrainer($index)">Delete trainer</button>
+        </li>
+      </ul>
 
-<h2>Add a Trainer</h2>
-<form action="" name="newTrainer">
-  <input type="text" name="trainerName" ng-model="home.newTrainerName">
-  <button type="button" ng-click="home.addTrainer()">Add</button>
-  <p ng-bind="home.newTrainerName"></p>
-</form>
-<p>
-  <a href="#" ng-click="home.showGonzo()">Show me Gonzo!</a>
-  <a href="#" ng-click="home.hideGonzo()">hide Gonzo!</a>
-  <a href="#" ng-click="home.toggleGonzo()">Toggle Gonzo!</a>
-  <span ng-class="home.getGonzoVisibilityClass()">Gonzo on for show!</span>
-</p>
+      <button type="button" ng-click="home.clearTrainerList()">clear trainer list</button>
+  </div>
+  <h2>Add a Trainer</h2>
+  <form action="" name="newTrainer">
+    <input type="text" name="trainerName" ng-model="home.newTrainerName">
+    <button type="button" ng-click="home.addTrainer()">Add</button>
+    <p ng-bind="home.newTrainerName"></p>
+  </form>
+  <p>
+    <a href="#" ng-click="home.showGonzo()">Show me Gonzo!</a>
+    <a href="#" ng-click="home.hideGonzo()">hide Gonzo!</a>
+    <a href="#" ng-click="home.toggleGonzo()">Toggle Gonzo!</a>
+    <span ng-class="home.getGonzoVisibilityClass()">Gonzo on for show!</span>
+  </p>
 
-<img
- src="http://vignette1.wikia.nocookie.net/muppet/images/3/31/Gonzo-TheVoice-2012.jpg"
- height="200"
- ng-if="home.getGonzoVisibility()"
- ng-mouseover="home.hideGonzo()"/>
+  <img
+   src="http://vignette1.wikia.nocookie.net/muppet/images/3/31/Gonzo-TheVoice-2012.jpg"
+   height="200"
+   ng-if="home.getGonzoVisibility()"
+   ng-mouseover="home.hideGonzo()"/>
 
 </body>
 </html>

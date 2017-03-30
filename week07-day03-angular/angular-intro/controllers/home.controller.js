@@ -29,6 +29,22 @@ function HomeController(){
     }
     return className;
   };
+  controller.clearTrainerList = function() {
+    controller.trainers = [];
+  };
+  controller.deleteOneTrainer = function(index) {
+    controller.trainers.splice(index, 1);
+  };
+  controller.newName = function (index){
+    var value = controller.updateTrainersNames[index];
+
+    if(value){
+      controller.trainers.splice(index, 1, value);
+    }
+  };
+  controller.canDisplayTrainerList = function (){
+    return controller.trainers.length > 0;
+  };
 
   controller.addTrainer = function(){
     console.log('addTrainer: Form:', controller.newTrainerName);

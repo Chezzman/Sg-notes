@@ -217,3 +217,13 @@ function HomeController(){
 angular
   .module('myFirstApp', [])
   .controller('HomeController', HomeController);
+
+
+____________________
+
+<p>
+  <a href="#" ng-click="home.showGonzo()">Show me Gonzo!</a>
+  <a href="#" ng-click="home.hideGonzo()">hide Gonzo!</a>
+  <a href="#" ng-click="home.toggleGonzo()">Toggle Gonzo!</a>
+  <span ng-class="{'isVisible': home.getGonzoVisibility(), 'isNotVisible': !home.getGonzoVisibility()}">Gonzo on for show!</span>
+</p>
