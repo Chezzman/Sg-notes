@@ -1,0 +1,21 @@
+{
+  "name": "simon-smith",
+  "homepage": "https://github.com/Chezzman/Sg-notes",
+  "authors": [
+    "Charles George van Oeffelen <charlesvo@spartaglobal.co>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.6.3",
+    "angular-ui-router": "^0.4.2"
+  }
+}

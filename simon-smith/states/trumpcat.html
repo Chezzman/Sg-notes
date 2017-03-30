@@ -1,0 +1,6 @@
+<section ng-controller="TrumpController as trump">
+  <h3>Extreme Tumpin collection</h3>
+  <div>
+    <img class="imageSize" ng-src="{{ trump.images[$index] }}" alt="He shall not be named!" ng-repeat="cat in trump.images track by $index">
+  </div>
+</section>

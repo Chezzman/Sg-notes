@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="SimonSmith">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+  <link rel="stylesheet" href="/css/main.css">
+
+  <script src="/angular/angular.min.js" charset="utf-8"></script>
+  <script src="/angular-ui-router/release/angular-ui-router.js" charset="utf-8"></script>
+  <script src="/js/app.js" charset="utf-8"></script>
+  <script src="/js/controllers/home.controller.js" charset="utf-8"></script>
+  <script src="/js/controllers/monster-trucks.controller.js" charset="utf-8"></script>
+  <script src="/js/controllers/trumpcats.controller.js" charset="utf-8"></script>
+  <script src="/js/controllers/extreme-frisbee.controller.js" charset="utf-8"></script>
+
+  <title>Simon Smith</title>
+
+</head>
+<body>
+  <h1>Simon smith</h1>
+  <nav>
+    <a ui-sref="home">Home</a>
+    <a ui-sref="trumpcats">TrumpCats</a>
+    <a ui-sref="extremeFrisbee">Extreme Frisbee</a>
+    <a ui-sref="monsterTrucks">MONSTER TRUCKS!</a>
+  </nav>
+  <h2>The one and only SIMON SMITH!!!!!! OMG KAWAIII</h2>
+
+  <section ui-view>
+
+  </section>
+</body>
+</html>

@@ -1,5 +1,9 @@
 <section ng-controller="ContactController as contact">
   <h2>This is Our Contact page</h2>
-  <p>blar</p>
-  <p>blar</p>
+  <p>THE WEATHER NEAR US IS FORCING US TO HAVE TECHNIQUAL ISSUES</p>
+  <p>ITS REALLY NOTHING TO DO WITH THE BAD INTERNET.... WE SWEAR</p>
+
+  <p ng-repeat="(key, value) in contact.details">
+    <strong>{{key}}</strong> - {{value}}
+  </p>
 </section>
