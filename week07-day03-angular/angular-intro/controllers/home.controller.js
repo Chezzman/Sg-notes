@@ -36,11 +36,7 @@ function HomeController(){
     controller.trainers.splice(index, 1);
   };
   controller.newName = function (index){
-    var value = controller.updateTrainersNames[index];
-
-    if(value){
-      controller.trainers.splice(index, 1, value);
-    }
+    controller.trainers[index] = controller.updateTrainerNames[index];
   };
   controller.canDisplayTrainerList = function (){
     return controller.trainers.length > 0;
@@ -50,11 +46,15 @@ function HomeController(){
     console.log('addTrainer: Form:', controller.newTrainerName);
     controller.trainers.push(controller.newTrainerName);
     controller.newTrainerName = '';
+    controller.updatTrainersName = controller.trainers.slice(0);
+
   };
 
   function init(){
     console.log('inside the HomeController');
     controller.newTrainerName = '';
+    controller.updateTrainerNames = [];
+    controller.updatTrainersName = controller.trainers.slice(0);
     controller.trainers = ['Steve', 'Matt', 'Ollie', 'Niall'];
     controller.title = 'Home Page';
     controller.hideGonzo();
