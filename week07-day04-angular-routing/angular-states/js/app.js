@@ -5,8 +5,19 @@ function mainRouter($stateProvider, $urlRouterProvider){
     {
       url: '/',
       templateUrl: '../states/home.html'
-    });
+    })
 
+    .state('about',
+    {
+      url: '/about',
+      templateUrl: '../states/about.html'
+    })
+
+    .state('contact',
+    {
+      url: '/contact',
+      templateUrl: '../states/contact.html'
+    });
   $urlRouterProvider.otherwise('/');
 }
 // Route: '#/users'  is the part in the url
