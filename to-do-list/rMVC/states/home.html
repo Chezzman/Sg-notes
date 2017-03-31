@@ -1,38 +1,37 @@
-<!DOCTYPE html>
-<html lang="en" ng-app="myFirstApp">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Angular intro</title>
-  <script src="bower_components/angular/angular.min.js" type="text/javascript" charset="utf-8" ></script>
-  <script src="app.js" charset="utf-8"></script>
-  <script src="controllers/home.controller.js" charset="utf-8"></script>
-  <style>
-    .isVisible {
-      color: blue;
-      -webkit-animation-name: colorGonzo;
-     -webkit-animation-duration: 4s;
-     animation-name: colorGonzo;
-     animation-duration: 4s;
-    }
-    @-webkit-keyframes colorGonzo {
-      color: green;
-    }
+<section ng-controller="HomeController as home">
+
+<h2>{{ home.title }}</h2>
+
+<div ng-if="">
+  <h3>to do:</h3>
+  <ul>
+    <li ng-repeat="todo in home.todos track by $index">
+      {{ todo }}
+      <button ng-click="moveToDone()">Complete</button>
+      <button ng-sref="edit">Edit</button>
+    </li>
+  </ul>
+  <button ng-click="home.clearTodoList()">Clear ToDos</button>
+</div>
+
+<div>
+  <h3 ng-if="showWhenDone">Done</h3>
+  <ul>
+    <li ng-repeat="done in home.todosDone track by $index">
+      {{ todosDone }}
+    </li>
+  </ul>
+
+</div>
 
 
-    @keyframes colorGonzo {
-      to { color: green;}
-    }
-    .isNotVisible{
-      color: lightGrey;
-    }
-  </style>
-</head>
-<body ng-controller="HomeController as home">
-  <h1 ng-mouseover="home.showGonzo()">{{ home.title }}</h1>
+
+
+  <!-- <h1>{{ home.title }}</h1>
+
 
   <div ng-if="home.canDisplayTrainerList()">
-      <h2>Trainers: </h2>
+      <h2>To DO list: </h2>
       <ul>
         <li ng-repeat="trainer in home.trainers track by $index">
           {{ trainer }}
@@ -64,7 +63,6 @@
    src="http://vignette1.wikia.nocookie.net/muppet/images/3/31/Gonzo-TheVoice-2012.jpg"
    height="200"
    ng-if="home.getGonzoVisibility()"
-   ng-mouseover="home.hideGonzo()"/>
+   ng-mouseover="home.hideGonzo()"/> -->
 
-</body>
-</html>
+</section>

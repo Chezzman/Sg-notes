@@ -1,7 +1,6 @@
-console.log('home.controller.js');
-
 function HomeController(){
   var controller = this;
+
   var canShowGonzo = false;
 
   // Shows example of sending the click event to this handler –
@@ -66,6 +65,7 @@ function HomeController(){
   init();
 }
 
+
 angular
-  .module('myFirstApp', [])
-  .controller('HomeController', HomeController);
+.module('todolist')
+.controller('HomeController', HomeController);

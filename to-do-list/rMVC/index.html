@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="todolist">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Angular intro</title>
+  <script src="/angular/angular.min.js" type="text/javascript" charset="utf-8" ></script>
+  <script src="/angular-ui-router/realse//angular-ui-router.min.js" type="text/javascript" charset="utf-8" ></script>
+  <script src="/js/app.js" charset="utf-8"></script>
+  <script src="/js/controllers/home.controller.js" charset="utf-8"></script>
+  <script src="/js/controllers/edit.controller.js" charset="utf-8"></script>
+  <script src="/js/controllers/add-todo.controller.js" charset="utf-8"></script>
+  <style>
+    .isVisible {
+      color: blue;
+      -webkit-animation-name: colorGonzo;
+     -webkit-animation-duration: 4s;
+     animation-name: colorGonzo;
+     animation-duration: 4s;
+    }
+    @-webkit-keyframes colorGonzo {
+      color: green;
+    }
+
+
+    @keyframes colorGonzo {
+      to { color: green;}
+    }
+    .isNotVisible{
+      color: lightGrey;
+    }
+  </style>
+</head>
+<body>
+  <a ui-sref="home">Todo</a>
+
+
+<h1>TODOS OR NOT TODOS</h1>
+
+<section ng-controller="" ui-view>
+
+</section>
+
+
+
+</body>
+</html>

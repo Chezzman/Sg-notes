@@ -1,0 +1,27 @@
+<section ng-controller="HomeController as home">
+  <h2>{{ home.title }}</h2>
+  <button><a ui-sref="new">Create Tado</a></button>
+
+  <div>
+    <h3>to do:</h3>
+    <ul>
+      <li ng-repeat="todo in home.todos track by $index">
+        {{ todos }}
+        <button ng-click="moveToDone(todos)">Complete</button>
+        <button><a ui-sref="edit">Edit</a></button>
+
+      </li>
+    </ul>
+    <button ng-click="home.clearTodoList()">Clear ToDos</button>
+  </div>
+
+  <div>
+    <h3 ng-if="showWhenDone">Done</h3>
+    <ul>
+      <li ng-repeat="done in home.todosDone track by $index">
+        {{ todosDone }}
+      </li>
+    </ul>
+
+  </div>
+</section>

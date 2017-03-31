@@ -1,4 +1,11 @@
-<section>
+  <h2>All Ducks</h2>
 
-   <h2>The Mighty Ducks</h2>
-</section>
+  <ul>
+    <li class="duck" ng-repeat="duck in duck.allDucks">
+      <div>
+        <span>Name: </span>
+        <a ui-sref="show({duckId : duck._id})">{{ duck.name }}</a>
+      </div>
+
+    </li>
+  </ul>

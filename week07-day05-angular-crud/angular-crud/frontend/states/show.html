@@ -1,0 +1,18 @@
+<h2>Duck fo Show</h2>
+
+<section ng-init="duck.getDuck()">
+  <h3>{{ duck.selectedDuck.duck.name }}</h3>
+
+  <div>
+    <span>Location: {{ duck.selectedDuck.duck.location }}</span>
+
+  </div>
+  <div>
+    <span>Status: {{ duck.selectedDuck.duck.color }}</span>
+
+  </div>
+  <div>
+    <span>Description: {{ duck.selectedDuck.duck.desc }}</span>
+
+  </div>
+</section>
