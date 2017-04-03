@@ -8,6 +8,7 @@
 
   <script src="app.js"></script>
   <script src="controllers/main.controller.js"></script>
+  <script src="directives/profile/profile.directive.js"></script>
 
   <link rel="stylesheet" href="css/style.css">
 
@@ -18,13 +19,10 @@
 
   <section class="profiles">
 
-    <div class="profile" ng-repeat="person in main.people">
-      <h3>{{ person.name }} - <em>Power Level: {{ person.level }}</em></h3>
-
-      <strong>
-        <li ng-repeat="skill in person.skills"> {{ skill }}</li>
-      </strong>
-
+    <div ng-repeat="person in main.people">
+      <profile
+        person="person">
+      </profile>
     </div>
 
   </section>

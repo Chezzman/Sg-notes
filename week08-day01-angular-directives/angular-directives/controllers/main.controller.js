@@ -18,7 +18,7 @@ function mainController () {
       level: 69,
       gender: 'male',
       position: 'Instructor',
-      skills: ['Extreme Ping Pong', 'Angular']
+      skills: ['Extreme Ping Pong', 'Angular', 'Kawaii Photographer']
     },
     {
       name: 'Lexie',
