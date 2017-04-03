@@ -15,10 +15,10 @@ function AuthRun(){
 function AuthFactory($firebaseAuth){
   return $firebaseAuth();
 }
-AuthFactory.$inject = ['$firebaseAuth'];
+//AuthFactory.$inject = ['$firebaseAuth'];
 
 
 angular
   .module('myApp')
   .run(AuthRun)
-  .factory('AuthFactory', AuthFactory);
+  .factory('AuthFactory', ['$firebaseAuth', AuthFactory]);

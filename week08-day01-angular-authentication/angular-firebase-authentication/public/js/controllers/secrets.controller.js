@@ -3,15 +3,15 @@ function SecretsController () {
   var controller = this;
 
   controller.secrets = [
-    'This is a secret',
-    'This is a secret',
-    'This is a secret',
-    'This is a secret',
-    'This is a secret',
-    'This is a secret',
-    'This is a secret',
-    'This is a secret',
-    'This is a secret'
+    'Pineapples are red',
+    'carrots are gold',
+    'oranges are blue',
+    'bannanas are purple',
+    'pears are black',
+    'avacardos are yellow',
+    'potatos are teal',
+    'sweat Potato are white',
+    'Im colour blind'
   ];
 
 }

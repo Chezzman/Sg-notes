@@ -26,7 +26,7 @@ function AuthController($state, AuthFactory) {
       },
       (error) => {
         controller.error = error;
-        console.warn('could not login to user with email and password: ', error);
+        console.warn('could not login toe user with email and password: ', error);
         resetCredentials();
       }
     );
