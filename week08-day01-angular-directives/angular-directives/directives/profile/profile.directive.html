@@ -1,13 +1,14 @@
 
 
 <div class="profile">
-    <h3>{{ person.name }} - <em>Power Level: {{ person.level }}</em></h3>
+    <h3>{{ person.name }} - <em>Power Level: {{ person.level }} - {{ person.gender}}</em></h3>
 
-    <h4>{{ person.gender}}</h4>
+    <button ng-click="toggleSkills()">Toggle Skills</button>
 
-    <strong>
-      <li ng-repeat="skill in person.skills"> {{ skill }}</li>
-    </strong>
-
+    <ul ng-if="showSkills" >
+      <strong>
+        <li ng-repeat="skill in person.skills"> {{ skill }}</li>
+      </strong>
+    </ul>
 
 </div>
