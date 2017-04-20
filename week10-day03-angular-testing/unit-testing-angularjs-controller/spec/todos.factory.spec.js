@@ -11,7 +11,6 @@ describe('TodosFactory', () => {
     it('Should show a list of an emply array', () => {
       expect(factoryToTest.list.length).toEqual(0);
     });
-
   });
 
   describe('add()', () => {
